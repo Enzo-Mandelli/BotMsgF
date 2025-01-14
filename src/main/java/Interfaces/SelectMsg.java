@@ -174,7 +174,12 @@ public class SelectMsg extends javax.swing.JFrame {
     private void removeMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMessageActionPerformed
         try {
             // TODO add your handling code here:
-            TextHandler.removeItem(dados, selectMessage());
+            dados = TextHandler.removeItem(dados, selectMessage());
+            try {
+                TextHandler.reescreveArquivo(dados);
+            } catch (IOException ex) {
+                Telas.falha("erro: " + ex);
+            }
             mensagens.removeAllItems();
             fillBox();
         } catch (IOException ex) {

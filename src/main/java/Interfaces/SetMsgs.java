@@ -9,6 +9,8 @@ import static Interfaces.Home.caminho;
 import java.io.IOException;
 import java.util.List;
 import Dados.TextHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import msg.botmsgf.UtillMsg;
 
 /**
@@ -17,7 +19,7 @@ import msg.botmsgf.UtillMsg;
  */
 public class SetMsgs extends javax.swing.JFrame {
     public static boolean editando = false;
-    public static int indexMsg;
+    public static int indexMsg = 0 ;
     public List<String[]> dados = Telas.select.dados;
     public int posMensagem = 0;
     public int posPessoa = 1;
@@ -286,8 +288,13 @@ public class SetMsgs extends javax.swing.JFrame {
     }//GEN-LAST:event_mensagemActionPerformed
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
-        if(Telas.select.editando){
+        if(editando){
             dados = TextHandler.removeItem(dados, indexMsg);
+            try {
+                TextHandler.reescreveArquivo(dados);
+            } catch (IOException ex) {
+                Telas.falha("erro: " + ex);
+            }
             editando = false;
         }
         Dados.TextHandler.escreverEmArquivo(geraArray());

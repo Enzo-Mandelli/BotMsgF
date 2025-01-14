@@ -86,19 +86,11 @@ public class TextHandler {
         return dados;
     }
     
-    public static void removeItem(int indexRemove) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
-             FileWriter writer = new FileWriter(nomeArquivo)) {
-            String linha;
-            int linhaAtual = 0;
-            while ((linha = br.readLine()) != null) {
-                if (linhaAtual != indexRemove) {
-                    writer.write(linha + System.lineSeparator());
-                }
-                linhaAtual++;
+     public static void reescreveArquivo(List<String[]> linhas) throws IOException {
+        try (FileWriter writer = new FileWriter(nomeArquivo)) {
+            for (int i = 0; i < linhas.size(); i++) {
+                writer.write(arrayParaString(linhas.get(i)) + System.lineSeparator());
             }
-        } catch (IOException e) {
-            Telas.falha("Erro ao remover linha: " + e.getMessage());
         }
     }
     
