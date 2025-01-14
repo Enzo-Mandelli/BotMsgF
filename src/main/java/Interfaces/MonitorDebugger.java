@@ -86,12 +86,15 @@ public class MonitorDebugger extends javax.swing.JFrame {
             .addGap(0, 38, Short.MAX_VALUE)
         );
 
+        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("On Thread");
 
+        jLabel2.setBackground(new java.awt.Color(51, 51, 51));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("On Horario");
 
+        jLabel3.setBackground(new java.awt.Color(51, 51, 51));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("On Main loop");
 
@@ -106,9 +109,11 @@ public class MonitorDebugger extends javax.swing.JFrame {
             .addGap(0, 38, Short.MAX_VALUE)
         );
 
+        jLabel4.setBackground(new java.awt.Color(51, 51, 51));
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("NextMSG");
 
+        jLabel5.setBackground(new java.awt.Color(51, 51, 51));
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("indexMsg");
 
@@ -122,9 +127,11 @@ public class MonitorDebugger extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setBackground(new java.awt.Color(51, 51, 51));
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Horario Registrado");
 
+        jLabel7.setBackground(new java.awt.Color(51, 51, 51));
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Horario Msg");
 
@@ -136,6 +143,7 @@ public class MonitorDebugger extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setBackground(new java.awt.Color(51, 51, 51));
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Dia Certo");
 

@@ -39,15 +39,8 @@ public class Engine implements Runnable{
                 while(ligado){
                     i = UtillMsg.idNextHorario(dados);
                     horarioAtual = ObterHorarios.shorarioFormatado();
+                    debugger(horario, horarioAtual, i);
                     horario = dados.get(i)[posHorario];
-                    if(UtillMsg.validDayWeek(dados.get(i)[posWeek])){
-                        Telas.monitoria.setIndex(String.valueOf(i));
-                        Telas.monitoria.setNextMsg(dados.get(i)[posMensagem]);
-                        Telas.monitoria.setHorarioAtual(horarioAtual);
-                        Telas.monitoria.setHorarioMsg(horario);
-                        Telas.monitoria.statusDayWeek(UtillMsg.validDayWeek(dados.get(i)[posWeek]));
-                        Telas.monitoria.statusHorario(horario.equals(horarioAtual));
-                    }
                     if(refresh){
                         refresh = false;
                         dados = lerDados();
@@ -76,7 +69,7 @@ public class Engine implements Runnable{
         }catch (IOException ex) {
             Telas.falha.setVisible(true);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+            Telas.falha("erro: " + ex);
         }
         
     }
@@ -89,6 +82,17 @@ public class Engine implements Runnable{
 
     public void reconnect() {
          reconectar = !reconectar;
+    }
+    
+    public void debugger(String horario, String horarioAtual, int i){
+         if(UtillMsg.validDayWeek(dados.get(i)[posWeek])){
+            Telas.monitoria.setIndex(String.valueOf(i));
+            Telas.monitoria.setNextMsg(dados.get(i)[posMensagem]);
+            Telas.monitoria.setHorarioAtual(horarioAtual);
+            Telas.monitoria.setHorarioMsg(horario);
+            Telas.monitoria.statusDayWeek(UtillMsg.validDayWeek(dados.get(i)[posWeek]));
+            Telas.monitoria.statusHorario(horario.equals(horarioAtual));
+        }
     }
     
 }

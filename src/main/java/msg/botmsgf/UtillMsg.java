@@ -12,6 +12,7 @@ import java.util.List;
 public class UtillMsg{
     public static int posHorario = 2;
     public static int posWeek = 3;
+    
     public static List<String[]> ordenarPorHorario(List<String[]> dados){
         for(int i = 0; i < dados.size(); i++){
             for(int j = 0; j < dados.size(); j++){

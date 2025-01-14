@@ -18,6 +18,7 @@ import Dados.TextHandler;
 public class SelectMsg extends javax.swing.JFrame {
     public int editMsg = 0;
     public int posMsg = 0;
+    public boolean editando = false;
     List<String[]> dados;
     /**
      * Creates new form SelectMsg
@@ -152,6 +153,7 @@ public class SelectMsg extends javax.swing.JFrame {
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         try {
+            editando = true;
             // TODO add your handling code here:
             Telas.select.setVisible(false);
             Telas.setMsg.setVisible(true);

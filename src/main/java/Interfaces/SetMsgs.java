@@ -116,6 +116,7 @@ public class SetMsgs extends javax.swing.JFrame {
         minuto.setFont(new java.awt.Font("Sitka Banner", 0, 14)); // NOI18N
         minuto.setText("MM");
 
+        seg.setBackground(new java.awt.Color(51, 51, 51));
         seg.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         seg.setForeground(new java.awt.Color(255, 255, 255));
         seg.setText("Seg");
@@ -125,6 +126,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        ter.setBackground(new java.awt.Color(51, 51, 51));
         ter.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         ter.setForeground(new java.awt.Color(255, 255, 255));
         ter.setText("Ter");
@@ -134,6 +136,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        qua.setBackground(new java.awt.Color(51, 51, 51));
         qua.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         qua.setForeground(new java.awt.Color(255, 255, 255));
         qua.setText("Qua");
@@ -143,6 +146,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        qui.setBackground(new java.awt.Color(51, 51, 51));
         qui.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         qui.setForeground(new java.awt.Color(255, 255, 255));
         qui.setText("Qui");
@@ -152,6 +156,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        sex.setBackground(new java.awt.Color(51, 51, 51));
         sex.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         sex.setForeground(new java.awt.Color(255, 255, 255));
         sex.setText("Sex");
@@ -161,6 +166,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        sab.setBackground(new java.awt.Color(51, 51, 51));
         sab.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         sab.setForeground(new java.awt.Color(255, 255, 255));
         sab.setText("Sab");
@@ -170,6 +176,7 @@ public class SetMsgs extends javax.swing.JFrame {
             }
         });
 
+        dom.setBackground(new java.awt.Color(51, 51, 51));
         dom.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
         dom.setForeground(new java.awt.Color(255, 255, 255));
         dom.setText("Dom");
@@ -279,11 +286,11 @@ public class SetMsgs extends javax.swing.JFrame {
     }//GEN-LAST:event_mensagemActionPerformed
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
-        if(editando){
-            TextHandler.removeItem(dados, indexMsg);
+        if(Telas.select.editando){
+            dados = TextHandler.removeItem(dados, indexMsg);
             editando = false;
         }
-        Dados.TextHandler.escreverArquivo();
+        Dados.TextHandler.escreverEmArquivo(geraArray());
         Telas.setMsg.dispose();
         Telas.sucesso.setVisible(true);
         Home.engine.refresh = true;

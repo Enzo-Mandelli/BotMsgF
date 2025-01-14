@@ -11,6 +11,6 @@ package msg.botmsgf;
 public class BotMsgF {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Interfaces.Telas.home.setVisible(true);
     }
 }

@@ -51,8 +51,6 @@ public class Home extends javax.swing.JFrame {
         demonstraStatus = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         reconectar = new javax.swing.JCheckBox();
-        csv = new javax.swing.JButton();
-        csvCaminho = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +110,7 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("l");
 
+        reconectar.setBackground(new java.awt.Color(51, 51, 51));
         reconectar.setFont(new java.awt.Font("Sitka Banner", 0, 10)); // NOI18N
         reconectar.setForeground(new java.awt.Color(255, 255, 255));
         reconectar.setText("Reconectar?");
@@ -120,20 +119,6 @@ public class Home extends javax.swing.JFrame {
                 reconectarActionPerformed(evt);
             }
         });
-
-        csv.setBackground(new java.awt.Color(51, 51, 51));
-        csv.setFont(new java.awt.Font("Sitka Banner", 0, 12)); // NOI18N
-        csv.setForeground(new java.awt.Color(255, 255, 255));
-        csv.setText("CSV");
-        csv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                csvActionPerformed(evt);
-            }
-        });
-
-        csvCaminho.setBackground(new java.awt.Color(51, 51, 51));
-        csvCaminho.setForeground(new java.awt.Color(255, 255, 255));
-        csvCaminho.setText("Digite aqui o Caminho para o CSV");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,9 +129,6 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(reconectar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(csv))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,10 +143,6 @@ public class Home extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(demonstraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(36, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(csvCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,11 +156,7 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(editarMensagem2)
                     .addComponent(ligaDesliga2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(csvCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(csv)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(reconectar))
         );
 
@@ -197,9 +171,7 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -212,7 +184,7 @@ public class Home extends javax.swing.JFrame {
     private void ligaDesliga2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligaDesliga2ActionPerformed
         // TODO add your handling code here:
         try{
-            Dados.TextHandler.escreverArquivo();
+            dados = Dados.TextHandler.getDados();
             engine.refresh = true;
             if(firstTime){
                 thread.start();
@@ -247,6 +219,8 @@ public class Home extends javax.swing.JFrame {
 
     private void editarMensagem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarMensagem2ActionPerformed
         // TODO add your handling code here:
+        Dados.TextHandler.getDados();
+        engine.refresh = true;
         if(onOff)onOFF();
         Telas.select.setVisible(true);
         Telas.select.fillBox();
@@ -257,12 +231,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         engine.reconnect();
     }//GEN-LAST:event_reconectarActionPerformed
-
-    private void csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csvActionPerformed
-        // TODO add your handling code here:
-        Dados.TextHandler.escreverArquivo();
-        engine.refresh = true;
-    }//GEN-LAST:event_csvActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,7 +260,6 @@ public class Home extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Home().setVisible(true);
@@ -301,8 +268,6 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton csv;
-    private javax.swing.JTextField csvCaminho;
     private javax.swing.JPanel demonstraStatus;
     private static javax.swing.JButton editarMensagem2;
     private javax.swing.JLabel jLabel3;

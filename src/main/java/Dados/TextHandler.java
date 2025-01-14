@@ -12,8 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,27 +42,21 @@ public class TextHandler {
         return itens;
     }
     
-    public static List<String[]> getDados(){
-        try {
-            List<String> linhas = lerArquivo();
-            List<String[]> dados = new ArrayList<>();
-            int i = 0;
-            for(String linha : linhas){
-                for(int j = 0; j < numItens; j++){
-                    if(!separarItens(linhas.get(i))[0].equals(null)){
-                        dados.add(separarItens(linhas.get(i)));
-                    }
-                }
-                i++;
-            }
-            return dados;
-        } catch (IOException ex) {
-            Telas.falha("erro: " + ex);
-            return null;
+    public static List<String[]> getDados() {
+    try {
+        List<String> linhas = lerArquivo();
+        List<String[]> dados = new ArrayList<>();
+        for (String linha : linhas) {
+            dados.add(separarItens(linha));
         }
+        return dados;
+    } catch (IOException ex) {
+        Telas.falha("erro: " + ex);
+        return null;
     }
+}
     
-    public static void escreverEmArquivo(List<String> conteudo) {
+    public static void escreverEmArquivo(String[] conteudo) {
         try {
             // Verificar se o arquivo existe e se o usuário tem permissão de escrita
             File file = new File(nomeArquivo);
@@ -74,7 +66,7 @@ public class TextHandler {
             }
             List<String> linhas = new ArrayList<>();
             linhas.addAll(lerArquivo());
-            linhas.addAll(conteudo);
+            linhas.add(arrayParaString(conteudo));
             int cont = 0;
             try (FileWriter writer = new FileWriter(nomeArquivo)) {
                 for (String linha : linhas) {
@@ -87,49 +79,31 @@ public class TextHandler {
         }
     }
     
-     public static void escreverArquivo() {
-        try {
-            // Verificar se o arquivo existe e se o usuário tem permissão de escrita
-            File file = new File(nomeArquivo);
-            if (!file.canWrite()) {
-                System.out.println("Você não tem permissão para escrever neste arquivo.");
-                return;
-            }
-            List<String> linhas = new ArrayList<>();
-            linhas.addAll(lerArquivo());
-            int cont = 0;
-            try (FileWriter writer = new FileWriter(nomeArquivo)) {
-                for (String linha : linhas) {
-                    writer.write(linhas.get(cont)+"\n");
-                    cont++;
+   
+        
+    public static List<String[]> removeItem(List<String[]> dados, int indexRemove){
+        dados.remove(indexRemove);
+        return dados;
+    }
+    
+    public static void removeItem(int indexRemove) {
+        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
+             FileWriter writer = new FileWriter(nomeArquivo)) {
+            String linha;
+            int linhaAtual = 0;
+            while ((linha = br.readLine()) != null) {
+                if (linhaAtual != indexRemove) {
+                    writer.write(linha + System.lineSeparator());
                 }
+                linhaAtual++;
             }
         } catch (IOException e) {
-            System.out.println("Erro ao escrever no arquivo: " + e.getMessage());
+            Telas.falha("Erro ao remover linha: " + e.getMessage());
         }
-     }
-        
-        public static void removeItem(int indexRemove){
-        try {
-            // Verificar se o arquivo existe e se o usuário tem permissão de escrita
-            File file = new File(nomeArquivo);
-            if (!file.canWrite()) {
-                System.out.println("Você não tem permissão para escrever neste arquivo.");
-                return;
-            }
-            List<String> linhas = new ArrayList<>();
-            linhas.addAll(lerArquivo());
-            int cont = 0;
-            try (FileWriter writer = new FileWriter(nomeArquivo)) {
-                for (String linha : linhas) {
-                    if(cont != indexRemove) writer.write(linhas.get(cont)+"\n");
-                    cont++;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Erro ao escrever no arquivo: " + e.getMessage());
-        }
-        
+    }
+    
+    public static String arrayParaString(String[] array) {
+        return String.join(",", array);
     }
 
 }
