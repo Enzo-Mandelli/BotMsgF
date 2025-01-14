@@ -17,8 +17,14 @@ public class Telas {
     public static Sucess sucesso = new Sucess();
     public static Fail falha = new Fail();
     public static MonitorDebugger monitoria = new MonitorDebugger();
+    
     public static void addItemCbBox(String item){
         select.setMensagens(item);
+    }
+    
+    public static void falha(String texto){
+        falha.setVisible(true);
+        falha.texto.setText(texto);
     }
     
     

@@ -4,16 +4,12 @@
  */
 package Interfaces;
 
-import Dados.Csv;
 import HorarioManager.UtilidadesHorario;
 import static Interfaces.Home.caminho;
-import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static msg.mensagemauto.AdminForever.posMensagem;
-import msg.mensagemauto.UtillMsg;
+import Dados.TextHandler;
+import msg.botmsgf.UtillMsg;
 
 /**
  *
@@ -284,13 +280,13 @@ public class SetMsgs extends javax.swing.JFrame {
 
     private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarActionPerformed
         if(editando){
-            Csv.sRemove(dados, indexMsg, caminho);
+            TextHandler.removeItem(dados, indexMsg);
             editando = false;
         }
-        Csv.swriterCSV(Home.caminho,geraArray());
+        Dados.TextHandler.escreverArquivo();
         Telas.setMsg.dispose();
         Telas.sucesso.setVisible(true);
-        Home.adm.refresh = true;
+        Home.engine.refresh = true;
     }//GEN-LAST:event_confirmarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -343,12 +339,17 @@ public class SetMsgs extends javax.swing.JFrame {
     public String[] getGeraArray(){
         return geraArray();
     }
-    public int getMessageId() throws IOException, CsvException{
-        indexMsg = Telas.select.selectMessage();
-        return indexMsg;
+    public int getMessageId() throws IOException{
+        try{
+            indexMsg = Telas.select.selectMessage();
+            return indexMsg;
+        }catch(Exception ex){
+            Telas.falha("erro: " + ex);
+            return -1;
+        }
     }
     public void getDados(){
-        dados = Csv.sreaderCsv(caminho);
+        dados = Dados.TextHandler.getDados();
         dados = UtillMsg.ordenarPorHorario(dados);
     }
     

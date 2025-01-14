@@ -4,15 +4,12 @@
  */
 package Interfaces;
 
-import Dados.Csv;
+
 import static Interfaces.Home.caminho;
-import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static msg.mensagemauto.AdminForever.posMensagem;
-import msg.mensagemauto.UtillMsg;
+import msg.botmsgf.UtillMsg;
+import Dados.TextHandler;
 
 /**
  *
@@ -20,6 +17,7 @@ import msg.mensagemauto.UtillMsg;
  */
 public class SelectMsg extends javax.swing.JFrame {
     public int editMsg = 0;
+    public int posMsg = 0;
     List<String[]> dados;
     /**
      * Creates new form SelectMsg
@@ -161,9 +159,7 @@ public class SelectMsg extends javax.swing.JFrame {
             Telas.setMsg.setEditData();
             Telas.setMsg.editando = true;
         } catch (IOException ex) {
-            Logger.getLogger(SelectMsg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvException ex) {
-            Logger.getLogger(SelectMsg.class.getName()).log(Level.SEVERE, null, ex);
+            Telas.falha("erro: " + ex);
         }
     }//GEN-LAST:event_editActionPerformed
 
@@ -176,13 +172,11 @@ public class SelectMsg extends javax.swing.JFrame {
     private void removeMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMessageActionPerformed
         try {
             // TODO add your handling code here:
-            Csv.sRemove(dados, selectMessage(), caminho);
+            TextHandler.removeItem(dados, selectMessage());
             mensagens.removeAllItems();
             fillBox();
         } catch (IOException ex) {
-            Logger.getLogger(SelectMsg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CsvException ex) {
-            Logger.getLogger(SelectMsg.class.getName()).log(Level.SEVERE, null, ex);
+            Telas.falha("erro: " + ex);
         }
     }//GEN-LAST:event_removeMessageActionPerformed
 
@@ -191,19 +185,19 @@ public class SelectMsg extends javax.swing.JFrame {
         
     }
     
-    public int selectMessage() throws IOException, CsvException{
-        dados = UtillMsg.ordenarPorHorario(Csv.sreaderCsv(Home.caminho));
+    public int selectMessage() throws IOException{
+        dados = UtillMsg.ordenarPorHorario(TextHandler.getDados());
         int i = mensagens.getSelectedIndex();
         return i;
     }
     
     public void fillBox(){
         try{
-            dados = Csv.sreaderCsv(caminho);
+            dados = TextHandler.getDados();
             dados = UtillMsg.ordenarPorHorario(dados);
             mensagens.removeAllItems();
             for(int i = 0; i < dados.size(); i++){
-                Telas.select.setMensagens(dados.get(i)[posMensagem]);
+                Telas.select.setMensagens(dados.get(i)[posMsg]);
             }
         }catch(Exception e){
             Telas.falha.setVisible(true);

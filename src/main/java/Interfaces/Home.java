@@ -6,10 +6,11 @@ C:\Users\Mandelli\Documents\NetBeansProjects\yay\src\main\java\Dados\msgs.csv
 package Interfaces;
 
 
-import Dados.Csv;
+
 import java.awt.Color;
 import java.util.List;
-import msg.mensagemauto.AdminForever;
+import msg.botmsgf.Engine;
+
 
 
 /**
@@ -23,7 +24,8 @@ public class Home extends javax.swing.JFrame {
     public int posMensagem = 0;
     public static String caminho = "";
     boolean onOff = false;
-    Thread thread = new Thread(adm);
+    public static Engine engine = new Engine();
+    Thread thread = new Thread(engine);
     public List<String[]> dados;
     /**
      * Creates new form Hoome
@@ -209,14 +211,16 @@ public class Home extends javax.swing.JFrame {
 
     private void ligaDesliga2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ligaDesliga2ActionPerformed
         // TODO add your handling code here:
-        if(Csv.sreaderCsvIsPossible(caminho)){
+        try{
+            Dados.TextHandler.escreverArquivo();
+            engine.refresh = true;
             if(firstTime){
                 thread.start();
                 firstTime = false;
             }
             Telas.monitoria.setVisible(true);
             onOFF();
-        }else{
+        }catch(Exception ex){
             Telas.falha.setVisible(true);
         }
     }//GEN-LAST:event_ligaDesliga2ActionPerformed
@@ -225,13 +229,13 @@ public class Home extends javax.swing.JFrame {
         if(!onOff){
             status.setText("LIGADO");
             onOff = true;
-            adm.ligado = true;
+            engine.ligado = true;
             demonstraStatus.setBackground(Color.green);
             
         }else{
             status.setText("DESLIGADO");
             onOff = false;
-            adm.ligado = false;
+            engine.ligado = false;
             demonstraStatus.setBackground(Color.red);
         }
     }
@@ -249,17 +253,16 @@ public class Home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_editarMensagem2ActionPerformed
 
-    private void csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csvActionPerformed
-        // TODO add your handling code here:
-        caminho = csvCaminho.getText();
-        Csv.sPureWriterCSV(caminho);
-        adm.refresh = true;
-    }//GEN-LAST:event_csvActionPerformed
-
     private void reconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reconectarActionPerformed
         // TODO add your handling code here:
-        adm.reconnect();
+        engine.reconnect();
     }//GEN-LAST:event_reconectarActionPerformed
+
+    private void csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_csvActionPerformed
+        // TODO add your handling code here:
+        Dados.TextHandler.escreverArquivo();
+        engine.refresh = true;
+    }//GEN-LAST:event_csvActionPerformed
 
     /**
      * @param args the command line arguments
